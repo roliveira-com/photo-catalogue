@@ -9,21 +9,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var platform_browser_1 = require('@angular/platform-browser');
-var app_component_1 = require('./app.component');
-var foto_module_1 = require('./foto/foto.module');
-var AppModule = (function () {
-    function AppModule() {
+var foto_component_1 = require('./foto.component');
+var fotoModule = (function () {
+    function fotoModule() {
     }
-    AppModule = __decorate([
+    fotoModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule, foto_module_1.fotoModule],
-            declarations: [app_component_1.AppComponent],
-            bootstrap: [app_component_1.AppComponent]
+            declarations: [foto_component_1.fotoComponent],
+            exports: [foto_component_1.fotoComponent] //...e aqui declaro quais módulos/componentes serão exportados
         }), 
         __metadata('design:paramtypes', [])
-    ], AppModule);
-    return AppModule;
+    ], fotoModule);
+    return fotoModule;
 }());
-exports.AppModule = AppModule;
-//# sourceMappingURL=app.module.js.map
+exports.fotoModule = fotoModule;
+//# sourceMappingURL=foto.module.js.map

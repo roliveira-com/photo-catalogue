@@ -1,0 +1,1 @@
+{"version":3,"file":"foto.module.js","sourceRoot":"","sources":["foto.module.ts"],"names":[],"mappings":";;;;;;;;;;AAAA,qBAAuB,eAAe,CAAC,CAAA;AACvC,+BAA8B,kBAAkB,CAAC,CAAA;AAOjD;IAAA;IAAyB,CAAC;IAL1B;QAAC,eAAQ,CAAC;YACN,YAAY,EAAE,CAAC,8BAAa,CAAC;YAC7B,OAAO,EAAE,CAAC,8BAAa,CAAC,CAAC,8DAA8D;SAC1F,CAAC;;kBAAA;IAEuB,iBAAC;AAAD,CAAC,AAA1B,IAA0B;AAAb,kBAAU,aAAG,CAAA"}

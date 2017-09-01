@@ -19,6 +19,42 @@
         <script>
             System.import('app').catch(function(err){ console.error(err); });
         </script>
+        <style>
+            .jumbotron{
+                color: #FFF;
+                background-color: #49A993;
+                background-image: url(http://www.triggers.com.br/wp-content/themes/triggers/img/pattern-verde.png);
+            }
+
+            .jumbotron h1{
+                color: #FFF;
+                text-transform: uppercase;
+            }
+
+            .btn-custom {
+                color: #fff;
+                background-color: #49A993;
+                border-color: #49A993;
+            }
+ 
+            .btn-custom {
+                text-shadow: 0 -1px 0 rgba(0,0,0,.2);
+                -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.15), 0 1px 1px rgba(0,0,0,.075);
+                box-shadow: inset 0 1px 0 rgba(255,255,255,.15), 0 1px 1px rgba(0,0,0,.075);
+            }
+
+
+            .btn-custom.active, 
+            .btn-custom.focus, 
+            .btn-custom:active, 
+            .btn-custom:focus, 
+            .btn-custom:hover{
+                color: #fff;
+                background-color: #49A993;
+                border-color: #49A993;
+            }
+
+        </style>
     </head>
     <body>
         <app></app>
