@@ -10,16 +10,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var foto_component_1 = require('../foto/foto.component');
+var http_1 = require('@angular/http');
 var CadastroComponent = (function () {
-    function CadastroComponent() {
+    function CadastroComponent(http) {
         this.foto = new foto_component_1.fotoComponent();
-        this.foto.titulo = 'Este é o título';
-        this.foto.url = 'Esta é a Url da imagem';
-        this.foto.descricao = 'Esta é a descrição';
+        this.foto.titulo = '';
+        this.foto.url = '';
+        this.foto.descricao = '';
+        this.http = http;
     }
     CadastroComponent.prototype.cadastrar = function (event) {
+        var _this = this;
+        // evitando que o formulario seja submetido e a página seja recarregada
         event.preventDefault();
-        console.log(this.foto);
+        // confirando as infromações que serão passadas via header
+        // instaciamos o objeto `Headers` que já foi importado acima...
+        var configs = new http_1.Headers();
+        // ...e adicionamos a informação dando um apend nesta instância
+        configs.append('Content-Type', 'application/json');
+        // No post, é necssário usar o JSON.stringify() para tranformar o objeto javascript em formato ...
+        // ... JSON TXT para ser aceito pelo servidor 
+        this.http.post('v1/fotos', JSON.stringify(this.foto), { headers: configs })
+            .subscribe(function () {
+            _this.foto = new foto_component_1.fotoComponent();
+            console.log('foto-salva');
+        }, function (erro) {
+            console.log('Não foi possível salvar a foto');
+        });
     };
     CadastroComponent = __decorate([
         core_1.Component({
@@ -27,7 +44,7 @@ var CadastroComponent = (function () {
             selector: 'cadastro',
             templateUrl: './cadastro.component.html'
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [http_1.Http])
     ], CadastroComponent);
     return CadastroComponent;
 }());

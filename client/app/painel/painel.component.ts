@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core'
+import {Component, Input, OnInit} from '@angular/core'
 
 @Component({
     moduleId: module.id,
@@ -6,9 +6,16 @@ import {Component, Input} from '@angular/core'
     templateUrl: './painel.component.html'
 })
 
-export class PainelComponent {
+export class PainelComponent implements OnInit{
 
     @Input() titulo: string;
 
+    ngOnInit(){
+        if (this.titulo.length > 7){
+            this.titulo = this.titulo.substr(0,7)+'...';
+        }else{
+            this.titulo = this.titulo;
+        }
+    }
 
 }
