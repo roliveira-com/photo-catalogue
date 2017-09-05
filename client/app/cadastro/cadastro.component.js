@@ -9,18 +9,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var AppComponent = (function () {
-    function AppComponent() {
+var foto_component_1 = require('../foto/foto.component');
+var CadastroComponent = (function () {
+    function CadastroComponent() {
+        this.foto = new foto_component_1.fotoComponent();
+        this.foto.titulo = 'Este é o título';
+        this.foto.url = 'Esta é a Url da imagem';
+        this.foto.descricao = 'Esta é a descrição';
     }
-    AppComponent = __decorate([
+    CadastroComponent.prototype.cadastrar = function (event) {
+        event.preventDefault();
+        console.log(this.foto);
+    };
+    CadastroComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
-            selector: 'app',
-            templateUrl: './app.component.html'
+            selector: 'cadastro',
+            templateUrl: './cadastro.component.html'
         }), 
         __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+    ], CadastroComponent);
+    return CadastroComponent;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.CadastroComponent = CadastroComponent;
+//# sourceMappingURL=cadastro.component.js.map

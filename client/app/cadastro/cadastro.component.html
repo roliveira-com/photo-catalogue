@@ -1,0 +1,29 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-06">
+            <form (submit)="cadastrar($event)">
+                <!-- Este agora é a maneira de se fazer two way data binding no Angular... -->
+                <div class="form-group">
+                    <label for="titulo">Título</label>
+                    <!-- ...o evento dentro de () faz com que cada vez que o evento `input`  for disparado a view atualiza o modelo.. -->
+                    <input (input)="foto.titulo = $event.target.value" [value]="foto.titulo" class="form-control" name="titulo" id="titulo" type="text" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="url">URL</label>
+                    <!-- ...já o parametro dentro de [] faz com  que o `value` deste elemento na view seja atualizado quando o modelo mudar... -->
+                    <input (input)="foto.url = $event.target.value" [value]="foto.url" type="text" class="form-control" name="url" id="url" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="descricao">Descrição</label>
+                    <!-- ...ou podemos usar uma sintaxe mais curta com o `ngModel`. Contudo é necessário importá-lo no modulo principal da aplicação  e
+                    obrigatoriamente definir o parâmetro `name` do elemento input -->
+                    <textarea [(ngModel)]="foto.descricao" class="form-control" name="description" id="descricao" cols="30" rows="10" autocomplete="off"></textarea>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Salvar</button>
+                <a [routerLink]="['']" class="btn btn-default">Voltar</a>
+                <hr>
+            </form>
+        </div>
+    </div>
+</div>

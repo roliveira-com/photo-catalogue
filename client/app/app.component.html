@@ -1,10 +1,2 @@
-<div class="jumbotron">
-    <h1>Photos</h1>
-</div>
-<div class="container">
-    <div class="row">
-        <painel *ngFor="let foto of fotos" titulo="{{foto.titulo}}" class="col-md-3">
-            <foto url="{{foto.url}}" titulo="{{foto.titulo}}"></foto>
-        </painel>
-    </div>
-</div>
+<!-- Esta diretiva especifica onde o módulo de rotas renderizará os componentes nele especificados -->
+<router-outlet></router-outlet>

@@ -9,18 +9,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var AppComponent = (function () {
-    function AppComponent() {
+var FiltroPorTitulo = (function () {
+    function FiltroPorTitulo() {
     }
-    AppComponent = __decorate([
-        core_1.Component({
-            moduleId: module.id,
-            selector: 'app',
-            templateUrl: './app.component.html'
+    // Tipando as variaveis para garantir o correta marcação de erros tanto pelo compilador quanto pela IDE
+    // Abaixo, o parâmetro `fotos` foi tipado com o componente `fotoComponent` que por sua vez tambem foi tipado...
+    // ...para aplicar a tipagem é necessário import o componente conforme acima
+    FiltroPorTitulo.prototype.transform = function (fotos, busca) {
+        busca = busca.toLowerCase();
+        return fotos.filter(function (foto) { return foto.titulo.toLowerCase().includes(busca); });
+    };
+    FiltroPorTitulo = __decorate([
+        core_1.Pipe({
+            name: 'filtroPorTitulo'
         }), 
         __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+    ], FiltroPorTitulo);
+    return FiltroPorTitulo;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.FiltroPorTitulo = FiltroPorTitulo;
+//# sourceMappingURL=foto.pipe.js.map
