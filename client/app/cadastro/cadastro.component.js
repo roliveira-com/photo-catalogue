@@ -11,13 +11,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var foto_component_1 = require('../foto/foto.component');
 var http_1 = require('@angular/http');
+// IMPORTANTE
+// Tanto a validação do form, quanto o bind de modelo/view para formulário dependem da importação dos módulos...
+// ... `ReactiveFormsModule` e `FormsModule` no modulo principal da aplicação respectivamente.
+// Validação no componente/modelo
+// Aqui, importamos antes de mais nada as classes `FormBuilder` e `Validators`. A primeira disponibilizará...
+// ...o bind entre a view e o modelo e a segunda a validação do form em si
+var forms_1 = require('@angular/forms');
 var CadastroComponent = (function () {
-    function CadastroComponent(http) {
+    // Com o FormBulder, conseguimos construir parametros para fazer o bind dos campos inputs na view...
+    // ...para a validação    
+    function CadastroComponent(http, fb) {
         this.foto = new foto_component_1.fotoComponent();
         this.foto.titulo = '';
         this.foto.url = '';
         this.foto.descricao = '';
         this.http = http;
+        // Chamando o método `group()` em FormBuilder (aqui, representados por `fb`) definimos as propriedades que são as mesmas...
+        // ...que usamos em `formControlName` na view e configuramos quais validadores aplicar
+        this.meuForm = fb.group({
+            titulo: ['', forms_1.Validators.compose([forms_1.Validators.required, forms_1.Validators.minLength(4)])],
+            url: ['', forms_1.Validators.required],
+            descricao: ['']
+        });
     }
     CadastroComponent.prototype.cadastrar = function (event) {
         var _this = this;
@@ -44,7 +60,7 @@ var CadastroComponent = (function () {
             selector: 'cadastro',
             templateUrl: './cadastro.component.html'
         }), 
-        __metadata('design:paramtypes', [http_1.Http])
+        __metadata('design:paramtypes', [http_1.Http, forms_1.FormBuilder])
     ], CadastroComponent);
     return CadastroComponent;
 }());

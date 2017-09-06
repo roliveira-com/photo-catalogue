@@ -1,30 +1,67 @@
 <div class="container">
+    <h1 class="text-center">{{foto.titulo}}</h1>
     <div class="row">
-        <div class="col-md-06">
-            <form (submit)="cadastrar($event)">
+        <div class="col-md-6">
+            <!-- Validando o form no template
+            Neste tipo de validação, toda a marcação vai no template. Fazemos isso com o isso de variáveis locais...
+            ...como a `#cadastroForm="ngForm"` logo abaixo... -->
+            <!-- <form (submit)="cadastrar($event)" #cadastroform="ngForm"> -->
+            
+            <!-- Validando o form no modelo/componente -->
+            <!-- o bind dos dados do template e no modelo para validação começa declarando a variável `meuForm`, conforme abaixo.
+            esta mesma variavel é decalarada no construtor da classe deste componenete -->
+            <form (submit)="cadastrar($event)" [formGroup]="meuForm">
                 <!-- Este agora é a maneira de se fazer two way data binding no Angular... -->
                 <div class="form-group">
                     <label for="titulo">Título</label>
                     <!-- ...o evento dentro de () faz com que cada vez que o evento `input`  for disparado a view atualiza o modelo.. -->
-                    <input (input)="foto.titulo = $event.target.value" [value]="foto.titulo" class="form-control" name="titulo" id="titulo" type="text" autocomplete="off">
+                    <!-- <input (input)="foto.titulo = $event.target.value" [value]="foto.titulo" class="form-control" name="titulo" id="titulo" type="text" autocomplete="off" required> -->
+                    <!-- ...ou a `#titulo="ngModel"`. No input tambem adicionamos o parâmetro required do html5... -->
+                    <!-- <input #titulo="ngModel" [(ngModel)]="foto.titulo" class="form-control" name="titulo" id="titulo" type="text" autocomplete="off" required> -->
+                    <!-- ..e usamos esta variável na diretiva `*nfIf` como abaixo chamamdo a propriedade `invalid` -->
+                    <!-- <span *ngIf="titulo.invalid" class="form-control alert-danger">Título Obrigatório</span> -->
+                    
+                    <!-- Na validação orientada ao modelo/componente tambem deve se fazer o bind do input com a propriedade que representa este dado...
+                    ...na classe. Para isto, deve-se importar a classe FormBuilder do módulo angular/forms. Esta classe disponibiliza o...
+                    ...parametro `formControlName` que aqui usei em `formControlName="titulo"` sendo que titulo é a mesma propriedade que usamos...
+                    ...método `group()` do componente -->
+                    <input formControlName="titulo" [(ngModel)]="foto.titulo" class="form-control" name="titulo" id="titulo" type="text" autocomplete="off">
+                    <!-- A manipulação de mensagem usa propriedades disponibilizada pela classe `Validators`, que já importamos no componente, associadas...
+                    ...a diretiva `ngIf` do Angular -->
+                    <div *ngIf="meuForm.controls.titulo.invalid">
+                        <span *ngIf="meuForm.controls.titulo.errors.required" class="form-control alert-danger">Título Obrigatório</span>
+                        <span *ngIf="meuForm.controls.titulo.errors.minlength" class="form-control alert-danger">O título deve ter no mínimo 4 caracteres</span>
+                    </div>
+                    
                 </div>
                 <div class="form-group">
                     <label for="url">URL</label>
                     <!-- ...já o parametro dentro de [] faz com  que o `value` deste elemento na view seja atualizado quando o modelo mudar... -->
-                    <input (input)="foto.url = $event.target.value" [value]="foto.url" type="text" class="form-control" name="url" id="url" autocomplete="off">
-                    <!-- <input [(ngModel)]="foto.url" type="text" class="form-control" name="url" id="url" autocomplete="off"> -->
+                    <!-- <input (input)="foto.url = $event.target.value" [value]="foto.url" type="text" class="form-control" name="url" id="url" autocomplete="off" required> -->
+                    <!-- <input #url="ngModel" [(ngModel)]="foto.url" type="text" class="form-control" name="url" id="url" autocomplete="off" required> -->
+
+                    <input formControlName="url" [(ngModel)]="foto.url" type="text" class="form-control" name="url" id="url" autocomplete="off">
+                    <span *ngIf="meuForm.controls.url.invalid" class="form-control alert-danger">URL Obrigatória</span>
                 </div>
                 <div class="form-group">
                     <label for="descricao">Descrição</label>
                     <!-- ...ou podemos usar uma sintaxe mais curta com o `ngModel`. Contudo é necessário importá-lo no modulo principal da aplicação  e
                     obrigatoriamente definir o parâmetro `name` do elemento input -->
-                    <textarea [(ngModel)]="foto.descricao" class="form-control" name="description" id="descricao" cols="30" rows="10" autocomplete="off"></textarea>
-                </div>
+                    <!-- <textarea [(ngModel)]="foto.descricao" class="form-control" name="description" id="descricao" cols="30" rows="10" autocomplete="off"></textarea> -->
 
-                <button class="btn btn-primary" type="submit">Salvar</button>
+                    <textarea formControlName="descricao"[(ngModel)]="foto.descricao" class="form-control" name="description" id="descricao" cols="30" rows="10" autocomplete="off"></textarea>
+                </div>
+                <!-- na validação tambem é possivel desabilitadr o botão chamando as propriedade `cadastro.form.invalid` na variavel local...
+                ...`#cadastroform` que definimos lá em cima -->
+                <!-- <button class="btn btn-primary" type="submit" [disabled]="cadastroform.form.invalid">Salvar</button> -->
+
+                <button class="btn btn-primary" type="submit" [disabled]="meuForm.invalid">Salvar</button>
                 <a [routerLink]="['']" class="btn btn-default">Voltar</a>
                 <hr>
             </form>
+        </div>
+        <div class="col-md-6">
+            <foto [url]="foto.url" [titulo]="foto.titulo"></foto>
         </div>
     </div>
 </div>

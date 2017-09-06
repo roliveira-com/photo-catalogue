@@ -24,7 +24,7 @@ var AppModule = (function () {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule, foto_module_1.fotoModule, http_1.HttpModule, painel_module_1.PainelModel, forms_1.FormsModule, app_routes_1.routing],
+            imports: [platform_browser_1.BrowserModule, foto_module_1.fotoModule, http_1.HttpModule, painel_module_1.PainelModel, forms_1.FormsModule, forms_1.ReactiveFormsModule, app_routes_1.routing],
             declarations: [app_component_1.AppComponent, cadastro_component_1.CadastroComponent, listagem_component_1.ListagemComponent],
             bootstrap: [app_component_1.AppComponent]
         }), 
