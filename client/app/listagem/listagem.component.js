@@ -9,24 +9,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var http_1 = require('@angular/http');
+var foto_service_1 = require('../foto/foto.service');
 var ListagemComponent = (function () {
-    //tambem é possivel usar outra sintaxe:
-    //fotos: Object[] = [];
-    function ListagemComponent(http) {
+    function ListagemComponent(service) {
         // http.get('/v1/fotos')
         //     .subscribe((res) => {
         //         this.fotos = res.json();
         //         console.log(this.fotos);
         //     }); 
         var _this = this;
+        // fotos: Array<Object> = []; 
+        //tambem é possivel usar outra sintaxe...
+        //fotos: Object[] = [];
+        // ...ou ainda definir que esta prorpiedade é do tipo `fotoComponent`
         this.fotos = [];
-        http.get('/v1/fotos')
-            .map(function (res) { return res.json(); })
+        // MOVIDO PARA foto.component.ts
+        // http.get('/v1/fotos')
+        //     .map(res => res.json())
+        //     .subscribe(fotos => {
+        //         this.fotos = fotos
+        //         console.log(this.fotos);
+        //     },erro => console.log(erro)); 
+        service.lista()
             .subscribe(function (fotos) {
             _this.fotos = fotos;
-            console.log(_this.fotos);
-        }, function (erro) { return console.log(erro); });
+        }, function (error) {
+            console.log(error);
+        });
     }
     ListagemComponent = __decorate([
         core_1.Component({
@@ -34,7 +43,7 @@ var ListagemComponent = (function () {
             selector: 'listagem',
             templateUrl: './listagem.component.html'
         }), 
-        __metadata('design:paramtypes', [http_1.Http])
+        __metadata('design:paramtypes', [foto_service_1.FotoService])
     ], ListagemComponent);
     return ListagemComponent;
 }());

@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var foto_component_1 = require('../foto/foto.component');
-var http_1 = require('@angular/http');
+var foto_service_1 = require('../foto/foto.service');
 // IMPORTANTE
 // Tanto a validação do form, quanto o bind de modelo/view para formulário dependem da importação dos módulos...
 // ... `ReactiveFormsModule` e `FormsModule` no modulo principal da aplicação respectivamente.
@@ -21,12 +21,12 @@ var forms_1 = require('@angular/forms');
 var CadastroComponent = (function () {
     // Com o FormBulder, conseguimos construir parametros para fazer o bind dos campos inputs na view...
     // ...para a validação    
-    function CadastroComponent(http, fb) {
+    function CadastroComponent(service, fb) {
         this.foto = new foto_component_1.fotoComponent();
+        this.service = service;
         this.foto.titulo = '';
         this.foto.url = '';
         this.foto.descricao = '';
-        this.http = http;
         // Chamando o método `group()` em FormBuilder (aqui, representados por `fb`) definimos as propriedades que são as mesmas...
         // ...que usamos em `formControlName` na view e configuramos quais validadores aplicar
         this.meuForm = fb.group({
@@ -39,19 +39,28 @@ var CadastroComponent = (function () {
         var _this = this;
         // evitando que o formulario seja submetido e a página seja recarregada
         event.preventDefault();
-        // confirando as infromações que serão passadas via header
+        // CONFIGS MOVIDAS PARA foto.service.ts
+        // confirando as informações que serão passadas via header
         // instaciamos o objeto `Headers` que já foi importado acima...
-        var configs = new http_1.Headers();
+        //let configs = new Headers(); 
         // ...e adicionamos a informação dando um apend nesta instância
-        configs.append('Content-Type', 'application/json');
+        //configs.append('Content-Type','application/json');
+        // CODIGO MOVIDO PARA foto.service.ts
         // No post, é necssário usar o JSON.stringify() para tranformar o objeto javascript em formato ...
         // ... JSON TXT para ser aceito pelo servidor 
-        this.http.post('v1/fotos', JSON.stringify(this.foto), { headers: configs })
+        // this.http.post('v1/fotos', JSON.stringify(this.foto), {headers: configs})
+        //         .subscribe(()=>{
+        //             this.foto = new fotoComponent();
+        //             console.log('foto-salva');
+        //         },erro => {
+        //             console.log('Não foi possível salvar a foto');
+        //         })
+        this.service.cadastra(this.foto)
             .subscribe(function () {
+            console.log('Foto cadastrada com Sucesso');
             _this.foto = new foto_component_1.fotoComponent();
-            console.log('foto-salva');
-        }, function (erro) {
-            console.log('Não foi possível salvar a foto');
+        }, function (error) {
+            console.log(error);
         });
     };
     CadastroComponent = __decorate([
@@ -60,7 +69,7 @@ var CadastroComponent = (function () {
             selector: 'cadastro',
             templateUrl: './cadastro.component.html'
         }), 
-        __metadata('design:paramtypes', [http_1.Http, forms_1.FormBuilder])
+        __metadata('design:paramtypes', [foto_service_1.FotoService, forms_1.FormBuilder])
     ], CadastroComponent);
     return CadastroComponent;
 }());
