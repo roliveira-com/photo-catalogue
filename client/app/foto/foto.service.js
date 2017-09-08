@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var http_1 = require('@angular/http');
 var core_1 = require('@angular/core');
-// Habilitando esta classe/service seja injetado no modulo e receber injeções
+// Habilitando esta classe/service para que receba injeção das dependencias
 var FotoService = (function () {
     function FotoService(http) {
         this.url = 'v1/fotos';
@@ -27,6 +27,9 @@ var FotoService = (function () {
     };
     FotoService.prototype.lista = function () {
         return this.http.get(this.url).map(function (res) { return res.json(); });
+    };
+    FotoService.prototype.remove = function (foto) {
+        return this.http.delete(this.url + '/' + foto._id);
     };
     FotoService = __decorate([
         core_1.Injectable(), 

@@ -15,9 +15,13 @@ export class ListagemComponent {
     //fotos: Object[] = [];
     // ...ou ainda definir que esta prorpiedade é do tipo `fotoComponent`
     fotos: fotoComponent[] = [];
+    service: FotoService;
+    mensagem: string;
 
     constructor(service: FotoService){
         
+        this.mensagem = "";
+        this.service = service;
         // http.get('/v1/fotos')
         //     .subscribe((res) => {
         //         this.fotos = res.json();
@@ -40,4 +44,21 @@ export class ListagemComponent {
             })
 
     }
+
+    remove(foto){
+        this.service.remove(foto)
+            .subscribe(()=>{
+
+                this.mensagem = 'Foto removida com sucesso';
+                //atualizando lista de fotos para ser mostrado na view
+                let updatedFotos = this.fotos.slice(0);
+                let index = updatedFotos.indexOf(foto);
+                updatedFotos.splice(index,1);
+                this.fotos = updatedFotos;
+
+            },error=>{
+                this.mensagem = 'Foto removida com sucesso';
+            })
+    }
+
 }

@@ -3,7 +3,7 @@ import {fotoComponent} from './foto.component';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 
-// Habilitando esta classe/service seja injetado no modulo e receber injeções
+// Habilitando esta classe/service para que receba injeção das dependencias
 @Injectable()
 
 export class FotoService {
@@ -34,6 +34,12 @@ export class FotoService {
     lista(): Observable<fotoComponent[]>{
 
         return this.http.get(this.url).map(res => res.json())
+
+    }
+
+    remove(foto: fotoComponent) {
+
+        return this.http.delete(this.url+'/'+foto._id);
 
     }
 }
