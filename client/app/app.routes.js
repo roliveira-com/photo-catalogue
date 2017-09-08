@@ -7,6 +7,8 @@ var listagem_component_1 = require('./listagem/listagem.component');
 var appRoutes = [
     { path: '', component: listagem_component_1.ListagemComponent },
     { path: 'cadastro', component: cadastro_component_1.CadastroComponent },
+    //usando rotas com parâmetros
+    { path: 'cadastro/:id', component: cadastro_component_1.CadastroComponent },
     { path: '**', component: listagem_component_1.ListagemComponent }
 ];
 // Exportando a constante routing que abrigará as rotas compiladas. Para o processo de compilação...

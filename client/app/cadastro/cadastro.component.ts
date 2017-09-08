@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {fotoComponent} from '../foto/foto.component'
 import {FotoService} from '../foto/foto.service';
+import {ActivatedRoute, Router} from '@angular/router'
 // IMPORTANTE
 // Tanto a validação do form, quanto o bind de modelo/view para formulário dependem da importação dos módulos...
 // ... `ReactiveFormsModule` e `FormsModule` no modulo principal da aplicação respectivamente.
@@ -17,7 +18,10 @@ import {FormGroup, FormBuilder, Validators} from '@angular/forms'
 
 export class CadastroComponent {
 
+    router: Router;
+
     foto: fotoComponent = new fotoComponent();
+    route: ActivatedRoute;
 
     // Para Validação, fazemos o bind do foem na view com o modelo, usando a variavel `meuForm` e tipando...
     // ...com o FormGroup que expostamos acima 
@@ -26,12 +30,27 @@ export class CadastroComponent {
 
     // Com o FormBulder, conseguimos construir parametros para fazer o bind dos campos inputs na view...
     // ...para a validação    
-    constructor(service: FotoService, fb: FormBuilder){
+    constructor(service: FotoService, fb: FormBuilder, route: ActivatedRoute, router: Router){
 
         this.service = service;
         this.foto.titulo = '';
         this.foto.url = '';
         this.foto.descricao = '';
+
+        this.router = router;
+
+        this.route = route;
+        this.route.params.subscribe(params=>{
+            let id = params['id'];            
+            if(id){
+                this.service.getById(id)
+                .subscribe(foto => {
+                    this.foto = foto;
+                },error => {
+                    console.log(error);
+                })
+            }
+        })
 
         // Chamando o método `group()` em FormBuilder (aqui, representados por `fb`) definimos as propriedades que são as mesmas...
         // ...que usamos em `formControlName` na view e configuramos quais validadores aplicar
@@ -68,7 +87,12 @@ export class CadastroComponent {
 
         this.service.cadastra(this.foto)
             .subscribe(()=>{
-                console.log('Foto cadastrada com Sucesso');
+                console.log('Foto salva com Sucesso');
+                
+                // Redirecionando página quando a foto for salva
+                this.router.navigate(['']);
+
+                // Limpando dados no formulário
                 this.foto = new fotoComponent();
             }, error => {
                 console.log(error);

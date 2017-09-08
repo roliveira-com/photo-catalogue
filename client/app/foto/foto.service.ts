@@ -26,9 +26,17 @@ export class FotoService {
     }
 
     cadastra(foto: fotoComponent): Observable<Response>{
-    
-        return this.http.post(this.url, JSON.stringify(foto), { headers: this.headers });
 
+        if(foto._id){
+            console.log('editando foto')
+            return this.http.put(this.url+'/'+foto._id, JSON.stringify(foto), { headers: this.headers });
+            
+        }else{
+            console.log('salvando foto')
+            return this.http.post(this.url, JSON.stringify(foto), { headers: this.headers });
+
+        }
+    
     }
 
     lista(): Observable<fotoComponent[]>{
@@ -42,4 +50,12 @@ export class FotoService {
         return this.http.delete(this.url+'/'+foto._id);
 
     }
+
+    getById(id: string): Observable<fotoComponent>{
+
+        return this.http.get(this.url+'/'+id)
+            .map(res => res.json());
+
+    }
+
 }

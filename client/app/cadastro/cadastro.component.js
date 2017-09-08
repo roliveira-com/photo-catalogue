@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var foto_component_1 = require('../foto/foto.component');
 var foto_service_1 = require('../foto/foto.service');
+var router_1 = require('@angular/router');
 // IMPORTANTE
 // Tanto a validação do form, quanto o bind de modelo/view para formulário dependem da importação dos módulos...
 // ... `ReactiveFormsModule` e `FormsModule` no modulo principal da aplicação respectivamente.
@@ -21,12 +22,26 @@ var forms_1 = require('@angular/forms');
 var CadastroComponent = (function () {
     // Com o FormBulder, conseguimos construir parametros para fazer o bind dos campos inputs na view...
     // ...para a validação    
-    function CadastroComponent(service, fb) {
+    function CadastroComponent(service, fb, route, router) {
+        var _this = this;
         this.foto = new foto_component_1.fotoComponent();
         this.service = service;
         this.foto.titulo = '';
         this.foto.url = '';
         this.foto.descricao = '';
+        this.router = router;
+        this.route = route;
+        this.route.params.subscribe(function (params) {
+            var id = params['id'];
+            if (id) {
+                _this.service.getById(id)
+                    .subscribe(function (foto) {
+                    _this.foto = foto;
+                }, function (error) {
+                    console.log(error);
+                });
+            }
+        });
         // Chamando o método `group()` em FormBuilder (aqui, representados por `fb`) definimos as propriedades que são as mesmas...
         // ...que usamos em `formControlName` na view e configuramos quais validadores aplicar
         this.meuForm = fb.group({
@@ -57,7 +72,10 @@ var CadastroComponent = (function () {
         //         })
         this.service.cadastra(this.foto)
             .subscribe(function () {
-            console.log('Foto cadastrada com Sucesso');
+            console.log('Foto salva com Sucesso');
+            // Redirecionando página quando a foto for salva
+            _this.router.navigate(['']);
+            // Limpando dados no formulário
             _this.foto = new foto_component_1.fotoComponent();
         }, function (error) {
             console.log(error);
@@ -69,7 +87,7 @@ var CadastroComponent = (function () {
             selector: 'cadastro',
             templateUrl: './cadastro.component.html'
         }), 
-        __metadata('design:paramtypes', [foto_service_1.FotoService, forms_1.FormBuilder])
+        __metadata('design:paramtypes', [foto_service_1.FotoService, forms_1.FormBuilder, router_1.ActivatedRoute, router_1.Router])
     ], CadastroComponent);
     return CadastroComponent;
 }());
