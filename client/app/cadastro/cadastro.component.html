@@ -2,6 +2,7 @@
     <h1 class="text-center">{{foto.titulo}}</h1>
     <div class="row">
         <div class="col-md-6">
+            <p *ngIf="mensagem.length" class="alert alert-info">{{mensagem}}</p>
             <!-- Validando o form no template
             Neste tipo de validação, toda a marcação vai no template. Fazemos isso com o isso de variáveis locais...
             ...como a `#cadastroForm="ngForm"` logo abaixo... -->

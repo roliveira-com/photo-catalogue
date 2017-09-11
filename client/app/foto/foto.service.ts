@@ -25,15 +25,17 @@ export class FotoService {
 
     }
 
-    cadastra(foto: fotoComponent): Observable<Response>{
+    cadastra(foto: fotoComponent): Observable<MensagemCadastro>{
 
         if(foto._id){
-            console.log('editando foto')
-            return this.http.put(this.url+'/'+foto._id, JSON.stringify(foto), { headers: this.headers });
+            
+            return this.http.put(this.url+'/'+foto._id, JSON.stringify(foto), { headers: this.headers })
+                .map(() => new MensagemCadastro('Foto Alterada com sucesso', false));
             
         }else{
-            console.log('salvando foto')
-            return this.http.post(this.url, JSON.stringify(foto), { headers: this.headers });
+            
+            return this.http.post(this.url, JSON.stringify(foto), { headers: this.headers })
+                .map(() => new MensagemCadastro('Foto Adicionada com sucesso', true));
 
         }
     
@@ -56,6 +58,39 @@ export class FotoService {
         return this.http.get(this.url+'/'+id)
             .map(res => res.json());
 
+    }
+
+}
+
+export class MensagemCadastro {
+
+    // private _mensagem: string;
+    // private _inclusao: boolean;
+    // Declarando `private` direto no parametro do contrutor não é necessario decelarar as variaveis antes
+
+    constructor(private _mensagem: string, private _inclusao: boolean){
+    //...sendo provadas, estas propriedades só pode ser alteradas e lidas pela propria classe
+        this._mensagem = _mensagem;
+        this._inclusao = _inclusao;
+
+    }
+
+    // Criando metodos exclusivamente para lerem as propriedades de fora da classe... 
+    // public getMensagem(){
+    //     return this._mensagem;
+    // }
+
+    // public isInclusao(){
+    //     return this._inclusao;
+    // }
+
+    // ...usando os métodos `get` do ES6 para acessar estes letodos de leitura da mesma forma que acessa as propriedades
+    get mensagem(): string{
+        return this._mensagem;
+    }
+
+    get inclusao(): boolean {
+        return this._inclusao;
     }
 
 }

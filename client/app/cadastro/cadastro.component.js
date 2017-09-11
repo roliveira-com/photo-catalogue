@@ -29,6 +29,7 @@ var CadastroComponent = (function () {
         this.foto.titulo = '';
         this.foto.url = '';
         this.foto.descricao = '';
+        this.mensagem = '';
         this.router = router;
         this.route = route;
         this.route.params.subscribe(function (params) {
@@ -71,10 +72,11 @@ var CadastroComponent = (function () {
         //             console.log('Não foi possível salvar a foto');
         //         })
         this.service.cadastra(this.foto)
-            .subscribe(function () {
-            console.log('Foto salva com Sucesso');
+            .subscribe(function (res) {
+            _this.mensagem = res.mensagem;
             // Redirecionando página quando a foto for salva
-            _this.router.navigate(['']);
+            if (!res.inclusao)
+                _this.router.navigate(['']);
             // Limpando dados no formulário
             _this.foto = new foto_component_1.fotoComponent();
         }, function (error) {

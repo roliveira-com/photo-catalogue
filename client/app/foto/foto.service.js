@@ -24,12 +24,12 @@ var FotoService = (function () {
     }
     FotoService.prototype.cadastra = function (foto) {
         if (foto._id) {
-            console.log('editando foto');
-            return this.http.put(this.url + '/' + foto._id, JSON.stringify(foto), { headers: this.headers });
+            return this.http.put(this.url + '/' + foto._id, JSON.stringify(foto), { headers: this.headers })
+                .map(function () { return new MensagemCadastro('Foto Alterada com sucesso', false); });
         }
         else {
-            console.log('salvando foto');
-            return this.http.post(this.url, JSON.stringify(foto), { headers: this.headers });
+            return this.http.post(this.url, JSON.stringify(foto), { headers: this.headers })
+                .map(function () { return new MensagemCadastro('Foto Adicionada com sucesso', true); });
         }
     };
     FotoService.prototype.lista = function () {
@@ -49,4 +49,40 @@ var FotoService = (function () {
     return FotoService;
 }());
 exports.FotoService = FotoService;
+var MensagemCadastro = (function () {
+    // private _mensagem: string;
+    // private _inclusao: boolean;
+    // Declarando `private` direto no parametro do contrutor não é necessario decelarar as variaveis antes
+    function MensagemCadastro(_mensagem, _inclusao) {
+        this._mensagem = _mensagem;
+        this._inclusao = _inclusao;
+        //...sendo provadas, estas propriedades só pode ser alteradas e lidas pela propria classe
+        this._mensagem = _mensagem;
+        this._inclusao = _inclusao;
+    }
+    Object.defineProperty(MensagemCadastro.prototype, "mensagem", {
+        // Criando metodos exclusivamente para lerem as propriedades de fora da classe... 
+        // public getMensagem(){
+        //     return this._mensagem;
+        // }
+        // public isInclusao(){
+        //     return this._inclusao;
+        // }
+        // ...usando os métodos `get` do ES6 para acessar estes letodos de leitura da mesma forma que acessa as propriedades
+        get: function () {
+            return this._mensagem;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MensagemCadastro.prototype, "inclusao", {
+        get: function () {
+            return this._inclusao;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return MensagemCadastro;
+}());
+exports.MensagemCadastro = MensagemCadastro;
 //# sourceMappingURL=foto.service.js.map

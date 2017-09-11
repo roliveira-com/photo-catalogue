@@ -27,6 +27,7 @@ export class CadastroComponent {
     // ...com o FormGroup que expostamos acima 
     meuForm: FormGroup;
     service: FotoService;
+    mensagem: string;
 
     // Com o FormBulder, conseguimos construir parametros para fazer o bind dos campos inputs na view...
     // ...para a validação    
@@ -36,6 +37,8 @@ export class CadastroComponent {
         this.foto.titulo = '';
         this.foto.url = '';
         this.foto.descricao = '';
+
+        this.mensagem = ''
 
         this.router = router;
 
@@ -86,11 +89,11 @@ export class CadastroComponent {
         //         })
 
         this.service.cadastra(this.foto)
-            .subscribe(()=>{
-                console.log('Foto salva com Sucesso');
+            .subscribe(res=>{
+                this.mensagem = res.mensagem;
                 
                 // Redirecionando página quando a foto for salva
-                this.router.navigate(['']);
+                if(!res.inclusao) this.router.navigate(['']);
 
                 // Limpando dados no formulário
                 this.foto = new fotoComponent();
