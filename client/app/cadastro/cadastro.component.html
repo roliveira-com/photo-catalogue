@@ -55,8 +55,9 @@
                 <!-- na validação tambem é possivel desabilitadr o botão chamando as propriedade `cadastro.form.invalid` na variavel local...
                 ...`#cadastroform` que definimos lá em cima -->
                 <!-- <button class="btn btn-primary" type="submit" [disabled]="cadastroform.form.invalid">Salvar</button> -->
-
-                <button class="btn btn-primary" type="submit" [disabled]="meuForm.invalid">Salvar</button>
+                
+                <botao nome="salvar" estilo="btn-primary" tipo="submit" [disable]="meuForm.invalid"></botao>
+                <!-- <button class="btn btn-primary" type="submit" [disabled]="meuForm.invalid">Salvar</button> -->
                 <a [routerLink]="['']" class="btn btn-default">Voltar</a>
                 <hr>
             </form>

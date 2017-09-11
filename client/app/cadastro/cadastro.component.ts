@@ -21,6 +21,8 @@ export class CadastroComponent {
     router: Router;
 
     foto: fotoComponent = new fotoComponent();
+
+    // Declarando variável para ativar o routeParams
     route: ActivatedRoute;
 
     // Para Validação, fazemos o bind do foem na view com o modelo, usando a variavel `meuForm` e tipando...
