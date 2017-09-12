@@ -39,18 +39,20 @@ var ListagemComponent = (function () {
             console.log(error);
         });
     }
-    ListagemComponent.prototype.remove = function (foto) {
+    ListagemComponent.prototype.remove = function (foto, painel) {
         var _this = this;
-        this.service.remove(foto)
-            .subscribe(function () {
-            _this.mensagem = 'Foto removida com sucesso';
-            //atualizando lista de fotos para ser mostrado na view
-            var updatedFotos = _this.fotos.slice(0);
-            var index = updatedFotos.indexOf(foto);
-            updatedFotos.splice(index, 1);
-            _this.fotos = updatedFotos;
-        }, function (error) {
-            _this.mensagem = 'Foto removida com sucesso';
+        painel.fadeOut(function () {
+            _this.service.remove(foto)
+                .subscribe(function () {
+                _this.mensagem = 'Foto removida com sucesso';
+                //atualizando lista de fotos para ser mostrado na view
+                var updatedFotos = _this.fotos.slice(0);
+                var index = updatedFotos.indexOf(foto);
+                updatedFotos.splice(index, 1);
+                _this.fotos = updatedFotos;
+            }, function (error) {
+                _this.mensagem = 'Foto removida com sucesso';
+            });
         });
     };
     ListagemComponent = __decorate([

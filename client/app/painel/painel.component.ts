@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core'
+import {Component, Input, OnInit, ElementRef} from '@angular/core'
 
 @Component({
     moduleId: module.id,
@@ -10,6 +10,11 @@ import {Component, Input, OnInit} from '@angular/core'
 export class PainelComponent implements OnInit{
 
     @Input() titulo: string;
+    element = ElementRef.prototype;
+
+    constructor(element: ElementRef){
+        this.element = element;
+    }
 
     ngOnInit(){
         if (this.titulo.length > 7){
@@ -17,6 +22,10 @@ export class PainelComponent implements OnInit{
         }else{
             this.titulo = this.titulo;
         }
+    }
+
+    fadeOut(cb){
+        $(this.element.nativeElement).fadeOut(cb);
     }
 
 }
